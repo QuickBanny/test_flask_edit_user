@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if current_user.is_authenticated %}
+  <h1>Welcome, {{ current_user.email }}</h1>
+{% else %}
+  <h1>Welcome!</h1>
+{% endif %}
+<br />
+
+{% if current_user.is_authenticated %}
+  <p>You are <span style="color:green">authenticated</span></p>
+  <ul>
+    <li><a href="/auth/logout">Logout</a></li>
+  </ul>
+
+  {% if current_user.admin == True %}
+    <a href="/add_user"><button type="button" class="btn btn-primary">Add users</button></a>
+  {% endif %}
+
+<h2>List users</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Admin</th>
+        {% if current_user.admin == True %}
+              <th>Edit</th>
+              <th>Delete</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in list_users %}
+            <tr>
+              <td>{{user.email}}</td>
+              <td>{{user.admin}}</td>
+              {% if current_user.admin == True %}
+              <td>
+                {% if current_user.email != user.email%}
+              <a href="/edit_user/{{user.id}}">Edit</a>
+              {% endif %}
+              </td>
+              <td>
+                {% if current_user.email != user.email%}
+              <a href="/delete_user/{{user.id}}">Delete</a>
+              {% endif %}
+              </td>
+              {% endif %}
+            </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<!--   <div class="row">
+        <div class="col-md-12">
+          {% for user in list_users %}
+            {{user}}
+            {% if current_user.admin == True and current_user.email != user.email%}
+            <li><a href="/auth/login">Edit</a></li>
+            {% endif %}
+          {% endfor %}
+        </div>
+  </div>
+ -->
+
+{% else %}
+  <p>You are <span style="color:red">not authenticated</span>:</p>
+  <ul>
+    <li><a href="/auth/login">Sign In</a></li>
+    <!-- <li>Need to <a href="/register">register</a>?</li>
+    <li><a href="/forgot">Forgot</a> your password?</li> -->
+  </ul>
+{% endif %}
+
+{% endblock %}
