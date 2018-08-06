@@ -2,6 +2,8 @@
 
 $ source venv/bin/activate
 
-$ python run.py create_admin
+Admin user:
+emai: ad@min.com
+password: admin
 
 $ python run.py runserver
