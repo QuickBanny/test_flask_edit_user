@@ -2,6 +2,6 @@
 
 $ source venv/bin/activate
 
-$ python manage.py create_admin
+$ python run.py create_admin
 
 $ python run.py runserver
